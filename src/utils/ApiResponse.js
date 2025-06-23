@@ -7,3 +7,6 @@ class ApiResponse {
   }
   // class methods here
 }
+
+
+export {ApiResponse}

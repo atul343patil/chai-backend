@@ -59,9 +59,10 @@ userSchema.pre("save", async function (next) {
 });
 
 //custom methods-----------------------------------------------------------------------------------------
-userSchema.methods.isPasswordCorrect = async function (Password) {
-  return await bcrypt.compare(password, this.password);
+userSchema.methods.isPasswordCorrect = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
 };
+
 //-----------------------------------------------------------------------------------------
 
 userSchema.methods.generateAccessToken = function () {

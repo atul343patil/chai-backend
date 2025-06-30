@@ -6,6 +6,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import verifyJWT from "../middlewares/auth.middleware.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import { UserCheck2 } from "lucide-react";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -193,8 +194,8 @@ const logoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(
     req.user._id,
     {
-      $set: {
-        refreshToken: undefined,
+      $unset: {
+        refreshToken: 1, //this removes the field from document 
       },
     },
     {
@@ -449,7 +450,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
 });
 
 const getWatchHistory = asyncHandler(async (req, res) => {
-  const user = await URIError.aggregate([
+  const user = await User.aggregate([
     {
       $match: {
         _id: new mongoose.Types.ObjectId(req.user._id), // got the user now we have to see the watch history of that user
